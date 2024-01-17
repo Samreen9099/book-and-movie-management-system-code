@@ -1,0 +1,288 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recommendation System</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+select {
+    margin-bottom: 15px;
+}
+button {
+    padding: 10px;
+    cursor: pointer;
+}
+#recommendations {
+    margin-top: 20px;
+}
+.warning {
+    color: red;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+<h1>Welcome to the Recommendation System</h1>
+<label for="age">Enter your age:</label>
+<input type="number" id="age" min="1" required>
+<label for="category">Choose a category:</label>
+<select id="category">
+<option value="books">Books</option>
+<option value="movies">Movies</option>
+</select>
+<label for="genre">Choose a genre:</label>
+<select id="genre">
+<option value="action">Action</option>
+<option value="drama">Drama</option>
+<option value="comedy">Comedy</option>
+<option value="fantasy">Fantasy</option>
+<option value="thriller">Thriller</option>
+<option value="sci-fic">Sci-Fic</option>
+<option value="mystery">Mystery</option>
+<option value="horror">Horror</option>
+<option value="romance">Romance</option>
+<option value="rom-com">Rom-Com</option>
+</select>
+<button onclick="getRecommendations()">Get Recommendations</button>
+<div id="recommendations">
+<script>
+function getRecommendations() {
+    var age = document.getElementById('age').value;
+    var category = document.getElementById('category').value;
+    var genre = document.getElementById('genre').value;
+    var recommendations = [];
+    
+    if (category === 'books') {
+        recommendations = [
+            { title: 'The Great Gatsby', genre: 'Drama', rating: 4.7, ageLimit: 16 },
+{title: 'To Kill A Mockingbird', genre: 'Drama', rating: 4.5, ageLimit: 14},
+                		{title: 'Harry Potter (Series)', genre: 'Fantasy', rating: 4.8, ageLimit: 12},
+		{title: 'Hamlet', genre: 'Drama', rating: 5.0, ageLimit: 12},
+		{title: 'Othello', genre: 'Drama', rating: 3.9, ageLimit: 9},
+		{title: 'The Kite Runner', genre: 'Drama', rating: 4.3, ageLimit: 16},
+		{title: 'Romeo And Juliet', genre: 'Drama', rating: 5.0, ageLimit: 12},
+		{title: 'Little Women', genre: 'Drama', rating: 5.0, ageLimit: 12},
+		{title: 'Lord Of The Flies', genre: 'Drama', rating: 4.0, ageLimit: 13},
+		{title: 'The Fault In Our Stars', genre: 'Drama', rating: 5.0, ageLimit: 13},
+		{title: 'A Sreetcar Named Desire', genre: 'Drama', rating: 4.6, ageLimit: 14},
+		{title: 'A Game Of Thrones', genre: 'Fantasy', rating: 4.0, ageLimit: 16},
+		{title: 'The Song Of Achilles', genre: 'Fantasy', rating: 4.3, ageLimit: 16},
+		{title: 'Six Of Crows (Series)', genre: 'Fantasy', rating: 5.0, ageLimit: 14},
+		{title: 'The Lord Of The Rings (Series)', genre: 'Fantasy', rating: 4.3, ageLimit: 14},
+		{title: 'Alice In Wonderland', genre: 'Fantasy', rating: 4.0, ageLimit: 12},
+		{title: 'Where The Wild Things Are', genre: 'Fantasy', rating: 4.2, ageLimit: 5},
+		{title: 'The Odyssey', genre: 'Fantasy', rating: 3.8, ageLimit: 15},
+		{title: 'Salems Lot', genre: 'Fantasy', rating: 4.1, ageLimit: 16},
+		{title: '1984', genre: 'Fantasy', rating: 4.2, ageLimit: 18},
+		{title: 'The Maze Runner', genre: 'Action', rating: 4.0, ageLimit: 12},
+		{title: 'Divergent', genre: 'Action', rating: 4.0, ageLimit: 14},
+		{title: 'Angels And Demons', genre: 'Action', rating: 4.0, ageLimit: 15},
+		{title: 'The Lighting Theif', genre: 'Action', rating: 4.0, ageLimit: 14},
+		{title: 'Catching Fire', genre: 'Action', rating: 4.7, ageLimit: 11},
+		{title: 'Ready Player One', genre: 'Action', rating: 5.0, ageLimit: 13},
+		{title: 'The Titans Curse', genre: 'Action', rating: 4.0, ageLimit: 12},
+		{title: 'City Of Bones', genre: 'Action', rating: 3.0, ageLimit: 12},
+		{title: 'The House Of Hades', genre: 'Action', rating: 4.0, ageLimit: 13},
+		{title: 'Heart Of Darkness', genre: 'Action', rating: 4.0, ageLimit: 13},
+		{title: 'Cold Comfort Farm', genre: 'Comedy', rating: 3.9, ageLimit: 18},
+		{title: 'Good Omens', genre: 'Comedy', rating: 5.0, ageLimit: 13},
+		{title: 'The Importance Of Being Earnest', genre: 'Comedy', rating: 4.2, ageLimit: 12},
+		{title: 'Me Talk Pretty One Day', genre: 'Comedy', rating: 4.1, ageLimit: 15},
+		{title: 'Is Everyone Hanging Out Without Me?', genre: 'Comedy', rating: 4.2, ageLimit: 12},
+		{title: 'The Diary Of A Nobody', genre: 'Comedy', rating: 3.9, ageLimit: 12},
+		{title: 'The Hitchhickers Guide To The Galaxy', genre: 'Comedy', rating: 5.0, ageLimit: 13},
+		{title: 'Something Fresh', genre: 'Comedy', rating: 4.5, ageLimit: 18},
+		{title: 'Anxious People', genre: 'Comedy', rating: 4.4, ageLimit: 16},
+		{title: 'Reasons To Be Cheerful', genre: 'Comedy', rating: 4.5, ageLimit: 13},
+		{title: 'The Silence Of The Lambs', genre: 'Thriller', rating: 5.0, ageLimit: 14},
+		{title: 'Gone Girl', genre: 'Thirller', rating: 5.0, ageLimit: 16},
+		{title: 'Miracle Creek: A Novel', genre: 'Thriller', rating: 4.5, ageLimit: 18},
+		{title: 'The Plotters', genre: 'Thriller', rating: 4.3, ageLimit: 22},
+		{title: 'Everything I Never Told You', genre: 'Thriller', rating: 3.8, ageLimit: 13},
+		{title: 'Your House Will Pay: A Novel', genre: 'Thriller', rating: 4.5, ageLimit: 13},
+		{title: 'The Girl On The Train', genre: 'Thriller', rating: 4.0, ageLimit: 15},
+		{title: 'The Silent Patient', genre: 'Thriller', rating: 4.2, ageLimit: 13},
+		{title: 'Misery', genre: 'Thriller', rating: 4.0, ageLimit: 13},
+		{title: 'Dune', genre: 'Sci-Fic', rating: 4.0, ageLimit: 14},
+		{title: 'Frankenstein', genre: 'Sci-Fic', rating: 4.0, ageLimit: 18},
+		{title: 'A Canticle For Leibowitz', genre: 'Sci-Fic', rating: 4.0, ageLimit: 18},
+		{title: 'Solaris', genre: 'Sci-Fic', rating: 3.0, ageLimit: 14},
+		{title: 'The Stand', genre: 'Sci-Fic', rating: 4.5, ageLimit: 18},
+		{title: 'The Time Machine', genre: 'Sci-Fic', rating: 3.0, ageLimit: 18},
+		{title: 'Foundation', genre: 'Sci-Fic', rating: 4.6, ageLimit: 12},
+		{title: 'Oryx And Crake', genre: 'Sci-Fic', rating: 4.0, ageLimit: 18},
+		{title: 'Enders Game', genre: 'Sci-Fic', rating: 4.0, ageLimit: 14},
+		{title: 'Ringworld', genre: 'Sci-Fic', rating: 3.9, ageLimit: 14},
+		{title: 'Rebecca', genre: 'Mystery', rating: 4.0, ageLimit: 13},
+		{title: 'The Woman In White', genre: 'Mystery', rating: 4.0, ageLimit: 13},
+		{title: 'The Alienist', genre: 'Mystery', rating: 4.1, ageLimit: 15},
+		{title: 'The Hound Of The Baskervilles', genre: 'Mystery', rating: 4.0, ageLimit: 10},
+		{title: 'The Secret History', genre: 'Mystery', rating: 4.2, ageLimit: 13},
+		{title: 'The Name Of The Rose', genre: 'Mystery', rating: 4.1, ageLimit: 14},
+		{title: 'Bluebird, Bluebird', genre: 'Mystery', rating: 4.0, ageLimit: 12},
+		{title: 'Tinker Tailor Soldier Spy', genre: 'Mystery', rating: 3.0, ageLimit: 18},
+		{title: 'The Talented Mr. Ripley', genre: 'Mystery', rating: 4.0, ageLimit: 15},
+		{title: 'The Shadow Of The Wind', genre: 'Mystery', rating: 4.5, ageLimit: 18},
+		{title: 'The House Next Door', genre: 'Horror', rating: 3.9, ageLimit: 12},
+		{title: 'Horrorstör', genre: 'Horror', rating: 4.5, ageLimit: 13},
+		{title: 'Those Across The River', genre: 'Horror', rating: 3.7, ageLimit: 18},
+		{title: 'The Bad Seed', genre: 'Horror', rating: 4.0, ageLimit: 7},
+		{title: 'Fledgling', genre: 'Horror', rating: 4.7, ageLimit: 12},
+		{title: 'Rosemarys Baby', genre: 'Horror', rating: 4.0, ageLimit: 14},
+		{title: 'The Little Stranger', genre: 'Horror', rating: 3.6, ageLimit: 15},
+		{title: 'The Monk', genre: 'Horror', rating: 3.8, ageLimit: 13},
+		{title: 'Carmilla', genre: 'Horror', rating: 3.8, ageLimit: 12},
+		{title: 'Beloved', genre: 'Horror', rating: 4.0, ageLimit: 15},
+		{title: 'Fangirl', genre: 'Romance', rating: 4.0, ageLimit: 12},
+		{title: 'Aristotle And Dante Discover The Secrets Of The Universe', genre: 'Romance', rating: 5.0, ageLimit: 12},
+		{title: 'Long Shots', genre: 'Romance', rating: 4.2, ageLimit: 18},
+		{title: 'Secrets Of A Summer Night', genre: 'Romance', rating: 4.0, ageLimit: 10},
+		{title: 'Fifty Shades Of Grey', genre: 'Romance', rating: 3.0, ageLimit: 18},
+		{title: 'The Kiss Quotient', genre: 'Romance', rating: 3.9, ageLimit: 18},
+		{title: 'Me Before You', genre: 'Romance', rating: 5.0, ageLimit: 17},
+		{title: 'Wuthering Heights', genre: 'Romance', rating: 5.0, ageLimit: 14},
+		{title: 'The Proposal', genre: 'Romance', rating: 3.5, ageLimit: 13},
+		{title: 'Sense And Sensibility', genre: 'Romance', rating: 5.0, ageLimit: 18},
+		{title: 'Red, White And Royal Blue', genre: 'Rom-Com', rating: 4.0, ageLimit: 18},
+		{title: 'The Love Hypothesis', genre: 'Rom-Com', rating: 4.3, ageLimit: 16},
+		{title: 'Can You Keep A Secret?', genre: 'Rom-Com', rating: 4.0, ageLimit: 15},
+		{title: 'Bet Me', genre: 'Rom-Com', rating: 3.9, ageLimit: 13},
+		{title: 'Love On The Brain', genre: 'Rom-Com', rating: 3.9, ageLimit: 15},
+		{title: 'The Undomestic Goddess', genre: 'Rom-Com', rating: 3.9, ageLimit: 10},
+		{title: 'Remember Me?', genre: 'Rom-Com', rating: 3.8, ageLimit: 18},
+		{title: 'The Rosie Project', genre: 'Rom-Com', rating: 4.5, ageLimit: 21},
+		{title: 'Dating-Ish', genre: 'Rom-Com', rating: 4.2, ageLimit: 18},
+		
+
+            // Add other book recommendations
+        ];
+    } else if (category === 'movies') {
+        recommendations = [
+            { title: 'The Shawshank Redemption', genre: 'Drama', rating: 9.3, ageLimit: 18 },
+{title: 'Inception', genre: 'Sci-Fic', rating: 8.8, ageLimit: 16},
+               		{title: 'The Villainess', genre: 'Action', rating: 6.6, ageLimit: 17},
+		{title: 'The Father', genre: 'Drama', rating: 8.2, ageLimit: 13},
+		{title: 'Yi Yi', genre: 'Drama', rating: 8.1, ageLimit: 15},
+		{title: 'There Will Be Blood', genre: 'Drama', rating: 8.2, ageLimit: 17},
+		{title: '12 Years A Slave', genre: 'Drama', rating: 8.1, ageLimit: 17},
+		{title: 'Moonlight', genre: 'Drama', rating: 7.4, ageLimit: 17},
+		{title: 'Oppenheimer', genre: 'Drama', rating: 8.4, ageLimit: 17},
+		{title: 'The Holdovers', genre: 'Drama', rating: 8.1, ageLimit: 17},
+		{title: 'Godzilla Minus One', genre: 'Drama', rating: 8.5, ageLimit: 13},
+		{title: 'The Godfather', genre: 'Drama', rating: 9.2, ageLimit: 17},
+		{title: 'High Life', genre: 'Sci-Fic', rating: 5.8, ageLimit: 16},
+		{title: 'Snowpiercer', genre: 'Sci-Fic', rating: 7.1, ageLimit: 18},
+		{title: 'District 9', genre: 'Sci-Fic', rating: 7.9, ageLimit: 17},
+		{title: 'Children Of Men', genre: 'Sci-Fic', rating: 7.9, ageLimit: 17},
+		{title: 'Donnie Darko', genre: 'Sci-Fic', rating: 8.0, ageLimit: 17},
+		{title: 'Eternal Sunshine Of The Spotless Mind', genre: 'Sci-Fic', rating: 8.3, ageLimit: 14},
+		{title: 'Under The Skin', genre: 'Sci-Fic', rating: 6.3, ageLimit: 17},
+		{title: 'Sunshine', genre: 'Sci-Fic', rating: 7.2, ageLimit: 17},
+		{title: 'A.I. Artificial Intelligence', genre: 'Sci-Fic', rating: 7.2, ageLimit: 13},
+		{title: 'The Man From U.N.C.L.E.', genre: 'Action', rating: 7.2, ageLimit: 13},
+		{title: 'Taken', genre: 'Action', rating: 7.8, ageLimit: 13},
+		{title: 'Wonder Woman', genre: 'Action', rating: 7.4, ageLimit: 13},
+		{title: 'Hero', genre: 'Action', rating: 7.9, ageLimit: 15},
+		{title: 'Atomic Blonde', genre: 'Action', rating: 6.7, ageLimit: 17},
+		{title: 'Avengers: Endgame', genre: 'Action', rating: 8.4, ageLimit: 13},
+		{title: 'Train To Busan', genre: 'Action', rating: 7.6, ageLimit: 13},
+		{title: 'The Lord Of The Rings: The Two Towers', genre: 'Action', rating: 8.8, ageLimit: 13},
+		{title: 'Edge Of Tommorrow', genre: 'Action', rating: 7.9, ageLimit: 13},
+		{title: 'Team America: World Police', genre: 'Comedy', rating: 7.2, ageLimit: 17},
+		{title: 'Borat: Cultural Learnings Of America For Make Benefit Glorious Nation Of Kazakhstan', genre: 'Comedy', rating: 7.4, ageLimit: 16},
+		{title: 'Anchorman: The Legend Of Ron Burgundy', genre: 'Comedy', rating: 7.1, ageLimit: 13},
+		{title: 'Four Lions', genre: 'Comedy', rating: 7.3, ageLimit: 17},
+		{title: 'Bridesmaids', genre: 'Comedy', rating: 6.8, ageLimit: 17},
+		{title: 'Zoolander', genre: 'Comedy', rating: 6.5, ageLimit: 13},
+		{title: 'Shaun Of The Dead', genre: 'Comedy', rating: 7.9, ageLimit: 13},
+		{title: 'Elf', genre: 'Comedy', rating: 7.1, ageLimit: 12},
+		{title: 'Napoleon Dynamite', genre: 'Comedy', rating: 7.0, ageLimit: 13},
+		{title: 'In The Loop', genre: 'Comedy', rating: 7.4, ageLimit: 13},
+		{title: 'The Fall', genre: 'Fantasy', rating: 8.1, ageLimit: 13},
+		{title: 'Solomon Kane', genre: 'Fantasy', rating: 6.1, ageLimit: 17},
+		{title: 'The Forbidden Kingdom', genre: 'Fantasy', rating: 6.5, ageLimit: 18},
+		{title: 'The Imaginarium Of Doctor Parnassus', genre: 'Fantasy', rating: 6.8, ageLimit: 13},
+		{title: 'Godmothered', genre: 'Fantasy', rating: 6.1, ageLimit: 13},
+		{title: 'The chronicles Of Narnia: Prince Caspian', genre: 'Fantasy', rating: 6.5, ageLimit: 13},
+		{title: 'The Hobbit: An Unexpected Journey', genre: 'Fantasy', rating: 7.8, ageLimit: 14},
+		{title: 'The House With A Wall In Its Walls', genre: 'Fantasy', rating: 6.1, ageLimit: 13},
+		{title: 'Stardust', genre: 'Fantasy', rating: 7.6, ageLimit: 13},
+		{title: 'Pinocchio', genre: 'Fantasy', rating: 5.1, ageLimit: 5},
+		{title: 'Headhunters', genre: 'Thriller', rating: 7.5, ageLimit: 14},
+		{title: 'The Hidden Face', genre: 'Thriller', rating: 7.3, ageLimit: 17},
+		{title: 'Department Q: The Keeper Of Lost Causes', genre: 'Thriller', rating: 7.2, ageLimit: 16},
+		{title: 'Prisoners', genre: 'Thriller', rating: 8.1, ageLimit: 17},
+		{title: 'Enemy', genre: 'Thriller', rating: 6.9, ageLimit: 18},
+		{title: 'Gone Girl', genre: 'Thriller', rating: 8.1, ageLimit: 15},
+		{title: 'Who Am I', genre: 'Thriller', rating: 7.5, ageLimit: 14},
+		{title: 'Nocturnal Animals', genre: 'Thriller', rating: 7.5, ageLimit: 17},
+		{title: 'Good Time', genre: 'Thriller', rating: 7.3, ageLimit: 13},
+		{title: 'Parasite', genre: 'Thriller', rating: 8.5, ageLimit: 16},
+		{title: 'The Killer', genre: 'Mystery', rating: 6.8, ageLimit: 17},
+		{title: 'Thanksgiving', genre: 'Mystery', rating: 6.9, ageLimit: 17},
+		{title: 'Killers Of The Flower Moon', genre: 'Mystery', rating: 7.9, ageLimit: 17},
+		{title: 'A Haunting In Venice', genre: 'Mystery', rating: 6.5, ageLimit: 13},
+		{title: 'Five Nights At Freddys', genre: 'Mystery', rating: 5.5, ageLimit: 13},
+		{title: 'X', genre: 'Mystery', rating: 6.5, ageLimit: 17},
+		{title: 'The Marsh Kings Daughter', genre: 'Mystery', rating: 5.9, ageLimit: 17},
+		{title: 'Reptile', genre: 'Mystery', rating: 6.8, ageLimit: 17},
+		{title: 'Eileen', genre: 'Mystery', rating: 6.7, ageLimit: 17},
+		{title: 'The Batman', genre: 'Mystery', rating: 7.8, ageLimit: 13},
+		{title: 'Hereditary', genre: 'Horror', rating: 7.3, ageLimit: 17},
+		{title: 'The Conjuring', genre: 'Horror', rating: 7.5, ageLimit: 11},
+		{title: 'The Ring', genre: 'Horror', rating: 7.1, ageLimit: 13},
+		{title: 'Sinister', genre: 'Horror', rating: 6.8, ageLimit: 13},
+		{title: 'Insidious', genre: 'Horror', rating: 5.5, ageLimit: 13},
+		{title: 'It', genre: 'Horror', rating: 7.3, ageLimit: 15},
+		{title: 'Let The Right One In', genre: 'Horror', rating: 7.8, ageLimit: 17},
+		{title: 'Get Out', genre: 'Horror', rating: 7.8, ageLimit: 13},
+		{title: 'One Cut Of The Dead', genre: 'Horror', rating: 7.6, ageLimit: 14},
+		{title: 'A Quiet Place', genre: 'Horror', rating: 7.5, ageLimit: 15},
+		{title: 'Avatar', genre: 'Romance', rating: 7.9, ageLimit: 13},
+		{title: 'Mr. & Mrs. Smith', genre: 'Romance', rating: 6.5, ageLimit: 13},
+		{title: 'The Notebook', genre: 'Romance', rating: 7.8, ageLimit: 13},
+		{title: 'A Walk To Remember', genre: 'Romance', rating: 7.3, ageLimit: 13},
+		{title: 'Pearl Harbor', genre: 'Romance', rating: 6.2, ageLimit: 13},
+		{title: 'If Only', genre: 'Romance', rating: 7.0, ageLimit: 13},
+		{title: 'Just Like Heaven', genre: 'Romance', rating: 6.7, ageLimit: 13},
+		{title: 'The Lake House', genre: 'Romance', rating: 6.8, ageLimit: 13},
+		{title: 'Serendipity', genre: 'Romance', rating: 6.8, ageLimit: 13},
+		{title: '50 First Dates', genre: 'Romance', rating: 6.8, ageLimit: 13},
+		{title: 'Love, Simon', genre: 'Rom-Com', rating: 7.5, ageLimit: 15},
+		{title: 'Eternal Sunshine Of The Spotless Mind', genre: 'Rom-Com', rating: 8.3, ageLimit: 14},
+		{title: 'Love And Basketball', genre: 'Rom-Com', rating: 7.2, ageLimit: 13},
+		{title: 'Always Be My Maybe', genre: 'Rom-Com', rating: 6.8, ageLimit: 13},
+		{title: 'Straight Up', genre: 'Rom-Com', rating: 6.9, ageLimit: 9},
+		{title: 'Scott Pilgrim Vs. The World', genre: 'Rom-Com', rating: 7.5, ageLimit: 14},
+		{title: 'How To Lose A Guy In 10 Days', genre: 'Rom-Com', rating: 6.5, ageLimit: 13},
+		{title: 'To All The Boys Ive Loved Before', genre: 'Rom-Com', rating: 7.0, ageLimit: 17},
+		{title: 'Kissing Jessica Stein', genre: 'Rom-Com', rating: 6.6, ageLimit: 15},
+		{title: 'Silver Linings Playbook', genre: 'Rom-Com', rating: 7.7, ageLimit: 17},
+
+            // Add other movie recommendations
+        ];
+    }
+
+    var output = '<h2>Recommended ' + category.charAt(0).toUpperCase() + category.slice(1) + ' in ' + genre + '</h2>';
+    recommendations.forEach(function (item) {
+        if (item.genre.toLowerCase() === genre.toLowerCase() && age >= item.ageLimit) {
+            output += '<p>Title: ' + item.title + '<br>Genre: ' + item.genre + '<br>Rating: ' + item.rating;
+            if (age < 18 && item.ageLimit > 18) {
+                output += '<br><span class="warning">Warning: This content is for 18+</span>';
+            }
+            output += '</p>';
+        }
+    });
+    document.getElementById('recommendations').innerHTML = output;
+}
+</script>
+</div>
+</body>
+</html>

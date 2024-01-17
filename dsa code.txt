@@ -1,0 +1,243 @@
+#include <iostream>
+#include <cmath>
+#include <string>
+
+using namespace std;
+
+template <size_t Rows, size_t Cols>
+
+class UserItemMatrix {
+public:
+    double data[Rows][Cols]; //for the matrix
+//constructor
+    UserItemMatrix(const double (&initData)[Rows][Cols]) {
+        for (size_t i = 0; i < Rows; ++i) {
+            for (size_t j = 0; j < Cols; ++j) {
+                data[i][j] = initData[i][j];
+            }
+        }
+    }
+//user-item collaborative fltering 
+    double calculateSimilarity(size_t user1, size_t user2) const {
+        double dotProduct = 0.0, normUser1 = 0.0, normUser2 = 0.0;
+        for (size_t item = 0; item < Cols; ++item) {
+            dotProduct += data[user1][item] * data[user2][item];
+            normUser1 += data[user1][item] * data[user1][item];
+            normUser2 += data[user2][item] * data[user2][item];
+        }
+        return (normUser1 == 0.0 || normUser2 == 0.0) ? 0.0 : dotProduct / (std::sqrt(normUser1) * std::sqrt(normUser2));
+    }
+
+    double predictRating(size_t user, size_t item) const {
+        double prediction = 0.0, similaritySum = 0.0;
+        for (size_t otherUser = 0; otherUser < Rows; ++otherUser) {
+            if (otherUser != user) {
+                double similarity = calculateSimilarity(user, otherUser);
+                similaritySum += abs(similarity);
+                prediction += similarity * data[otherUser][item];
+            }
+        }
+        return (similaritySum == 0.0) ? 0.0 : prediction / similaritySum;
+    }
+
+    static string getItemName(size_t itemIndex, bool isMovie) {
+        const char* movieTitles[] = {"final destination", "culpa mia", "wonder women", "rings", "avatar", "inception"};
+        const char* bookTitles[] = {"one of us is lying", "shatter me", "layla", "once upon a broken heart", "1984", "brave new world"};
+
+        if (isMovie) {
+            return (itemIndex < sizeof(movieTitles) / sizeof(movieTitles[0])) ? movieTitles[itemIndex] : "Unknown Movie";
+        } else {
+            return (itemIndex < sizeof(bookTitles) / sizeof(bookTitles[0])) ? bookTitles[itemIndex] : "Unknown Book";
+        }
+    }
+
+    static string getGenreName(size_t genreIndex) {
+        const char* genres[] = {"Romance", "Horror", "Thriller", "Sci-Fi", "Fantasy"};
+        return (genreIndex < sizeof(genres) / sizeof(genres[0])) ? genres[genreIndex] : "Unknown Genre";
+    }
+
+    static double getItemRating(size_t itemIndex) {
+        // In a real scenario, you would fetch the rating from a database.
+        return 4.0;  // Placeholder rating for demonstration purposes.
+    }
+
+    static bool isMatureContent(size_t itemIndex, bool isMovie) {
+        // Add your logic to determine if the item is mature content.
+        // For example, you can use predefined criteria or ask the user.
+        return (isMovie && itemIndex == 1) || (!isMovie && itemIndex == 3);
+    }
+
+    static void displayWarning() {
+        cout << "Warning: This content may contain mature themes or scenes.\n";
+    }
+};
+
+bool isValidName(const std::string& name) {
+    for (char c : name) {
+        if (!isalpha(static_cast<unsigned char>(c))) {
+            return false;
+        }
+    }
+    return name.length() >= 3;
+}
+
+bool isValidAge(const string& age) {
+    for (char c : age) {
+        if (!isdigit(static_cast<unsigned char>(c))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+string getValidName() {
+    string name;
+    do {
+        cout << "Enter your name (at least 3 alphabetic characters): ";
+        getline(cin, name);
+    } while (!isValidName(name));
+    return name;
+}
+
+string getValidAge() {
+    string age;
+    do {
+        cout << "Enter your age (digits only): ";
+        getline(cin, age);
+    } while (!isValidAge(age));
+    return age;
+}
+
+size_t getGenreSelection() {
+    size_t genreSelection;
+    do {
+        cout << "Select a genre:\n";
+        cout << "1. Romance\n";
+        cout << "2. Horror\n";
+        cout << "3. Thriller\n";
+        cout << "4. Sci-Fi\n";
+        cout << "5. Fantasy\n";
+        cin >> genreSelection;
+    } while (genreSelection < 1 || genreSelection > 5);
+    return genreSelection;
+}
+
+void displayItemsForGenre(bool isMovie, size_t genreIndex) {
+    cout << "\nItems in the selected genre:\n";
+    size_t itemCount = 6;  // Number of items for each genre
+    for (size_t item = 0; item < itemCount; ++item) {
+        cout << (isMovie ? "Movie " : "Book ") << item + 1 << ": "
+             << UserItemMatrix<3, 8>::getItemName(item, isMovie) << "\n";
+    }
+}
+
+size_t getUserSelection(size_t itemCount) {
+    size_t userSelection;
+    do {
+        cout << "Enter the index of the item you want more information about (1-" << itemCount << "): ";
+        cin >> userSelection;
+    } while (userSelection < 1 || userSelection > itemCount);
+    return userSelection - 1;
+}
+
+void checkMatureContent(size_t selectedIdx, bool isMovie, int userAge, const UserItemMatrix<3, 8>& userItemMatrix) {
+    bool isMature = UserItemMatrix<3, 8>::isMatureContent(selectedIdx, isMovie);
+    if (isMature && userAge < 18) {
+        cout << "This content is mature. Do you have permission to access it? (yes/no): ";
+        string permission;
+        cin >> permission;
+
+        if (permission == "yes") {
+            if (isMovie) {
+                cout << "Movie: " << UserItemMatrix<3, 8>::getItemName(selectedIdx, true) << "\n";
+                cout << "Rating: " << UserItemMatrix<3, 8>::getItemRating(selectedIdx) << "\n";
+            } else {
+                cout << "Book: " << UserItemMatrix<3, 8>::getItemName(selectedIdx, false) << "\n";
+                cout << "Rating: " << UserItemMatrix<3, 8>::getItemRating(selectedIdx) << "\n";
+            }
+        } else {
+            cout << "Access denied. Exiting program.\n";
+            exit(0);
+        }
+    }
+}
+
+int main() {
+    const double initData[3][8] = {
+        {4.5, 5.0, 0.0
+
+, 2.5, 3.5, 4.0, 0.0, 3.0},
+        {0.0, 4.0, 3.5, 0.0, 4.5, 0.0, 4.0, 0.0},
+        {5.0, 0.0, 0.0, 4.0, 0.0, 0.0, 5.0, 4.5},
+    };
+
+    string userName = getValidName();
+    string userAge = getValidAge();
+
+    int age;
+    try {
+        age = stoi(userAge);
+    } catch (const invalid_argument& e) {
+        cerr << "Invalid age input. Exiting program.\n";
+        return 1;
+    } catch (const out_of_range& e) {
+        cerr << "Age out of range. Exiting program.\n";
+        return 1;
+    }
+
+    UserItemMatrix<3, 8> userItemMatrix(initData);
+
+    cout << "\nUser Information:\n";
+    cout << "Name: " << userName << "\n";
+    cout << "Age: " << age << "\n";
+
+    cout << "\nSelect Recommendations:\n";
+    cout << "1. Movies\n";
+    cout << "2. Books\n";
+    cout << "3. Both\n";
+    cout << "Enter your choice (1, 2, or 3): ";
+    int choice;
+    cin >> choice;
+
+    size_t genreIndex;
+    if (choice == 1 || choice == 2) {
+        genreIndex = getGenreSelection();
+        if (choice == 1) {
+            displayItemsForGenre(true, genreIndex);
+        } else {
+            displayItemsForGenre(false, genreIndex);
+        }
+    } else if (choice == 3) {
+        cout << "Select genre for Movies:\n";
+        genreIndex = getGenreSelection();
+        displayItemsForGenre(true, genreIndex);
+
+        cout << "Select genre for Books:\n";
+        genreIndex = getGenreSelection();
+        displayItemsForGenre(false, genreIndex);
+    } else {
+        cout << "Invalid selection.\n";
+        return 1;
+    }
+
+    size_t selectedItemIndex = getUserSelection(6);  // Updated for the increased number of items
+
+    // Check for mature content and display information
+    checkMatureContent(selectedItemIndex, choice == 1 || (choice == 3 && genreIndex == 2), age, userItemMatrix);
+
+    cout << "\nSelected Information:\n";
+    if (choice == 1 || (choice == 3 && genreIndex == 1)) {
+        cout << "Movie: " << UserItemMatrix<3, 8>::getItemName(selectedItemIndex, true) << "\n";
+        cout << "Rating: " << UserItemMatrix<3, 8>::getItemRating(selectedItemIndex) << "/5 "<< "\n";
+        if (genreIndex == 2) {
+            UserItemMatrix<3, 8>::displayWarning();
+        }
+    }
+
+    if (choice == 2 || (choice == 3 && genreIndex == 3)) {
+        cout << "Book: " << UserItemMatrix<3, 8>::getItemName(selectedItemIndex, false) << "\n";
+        cout << "Rating: " << UserItemMatrix<3, 8>::getItemRating(selectedItemIndex) << "/5 "<<"\n";
+    }
+
+    return 0;
+}
